@@ -1,28 +1,60 @@
 @page "/categories"
+@rendermode InteractiveServer
 @using MudBlazor
 
-<MudText Typo="Typo.h5" Class="mb-4" Align="Align.Center">
-    Choose a Category
-</MudText>
+<div style="
+    min-height: 90vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    padding-top: 15rem;">
 
-<MudGrid Spacing="3" Justify="Justify.Center">
+    <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-6">
+        🎯 Choose a Category
+    </MudText>
 
-    <MudItem xs="12" sm="6" md="4">
-        <MudCard Class="p-4" Style="text-align:center;">
-            <MudText Typo="Typo.h6">🎮 Gaming</MudText>
-            <MudText Typo="Typo.caption" Class="mb-2">
-                Games, consoles, characters
-            </MudText>
+    <MudButton
+        Variant="Variant.Filled" 
+        Color="Color.Primary"
+        Class="glow-button"
+        Style="
+        width: 300px;
+        height: 110px;
+        font-size: 2rem;
+        font-weight: 600;
+        border-radius: 20px;
+    ">
+    
+        Gaming 🎮
+    </MudButton>
+    
+    <MudButton
+        Variant="Variant.Filled" 
+        Color="Color.Primary"
+        Class="glow-button"
+        Style="
+        width: 300px;
+        height: 110px;
+        font-size: 2rem;
+        font-weight: 600;
+        border-radius: 20px;
+    ">
+    
+        Sport 🥊
+    </MudButton>
 
-            <MudButton 
-                Size="Size.Small" 
-                Variant="Variant.Filled" 
-                Color="Color.Primary"
-                Href="/quiz/gaming">
+</div>
 
-                Play
-            </MudButton>
-        </MudCard>
-    </MudItem>
-
-</MudGrid>
+<!-- Copyright längst ner -->
+<div style="
+    margin-top: auto; 
+    padding-bottom: 16px; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;">
+    
+    <MudText Typo="Typo.caption" Color="Color.Secondary">
+        © 2026 FindingTheCode. All rights reserved.
+    </MudText>
+</div>

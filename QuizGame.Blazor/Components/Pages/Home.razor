@@ -1,13 +1,15 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 @using MudBlazor
 @inject NavigationManager Nav
 
 <div style="
     min-height: 92vh; 
     display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    text-align: center;">
+    justify-content: center;   /* centrerar horisontellt */
+    align-items: flex-start;  /* flyttar upp till toppen */
+    text-align: center;
+    padding-top: 15rem;">
 
     <div>
         <MudText Typo="Typo.h1" Class="mb-3">
@@ -21,8 +23,9 @@
         <MudButton 
             Size="Size.Large" 
             Variant="Variant.Filled" 
+            Class="glow-button"
             Color="Color.Primary"
-            OnClick="@(() => Nav.NavigateTo("/categories"))"
+            OnClick="StartQuiz"
             Style="padding: 16px 40px; font-size: 1.1rem; border-radius: 12px;">
     
             Start Quiz 🎮
@@ -49,3 +52,9 @@
 </div>
 
 
+@code {
+    private void StartQuiz()
+    {
+        Nav.NavigateTo("/categories");
+    }
+}

@@ -1,22 +1,119 @@
 @page "/quiz/gaming"
-
+@rendermode InteractiveServer
 @using MudBlazor
 
-<MudText Typo="Typo.h4" Align="Align.Center" Class="mb-4">
-    🎮 Gaming Quiz
-</MudText>
+<div style="
+    min-height: 90vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    padding-top: 1rem;">
 
-<MudCard Class="p-4" Style="max-width:600px; margin:auto;">
-
-    <MudText Typo="Typo.h6" Class="mb-3">
-        What year was PlayStation 1 released?
+    <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-4">
+        🎮 Gaming Quiz
     </MudText>
 
-    <MudStack Spacing="2">
-        <MudButton Variant="Variant.Outlined">1994</MudButton>
-        <MudButton Variant="Variant.Outlined">1996</MudButton>
-        <MudButton Variant="Variant.Outlined">2000</MudButton>
-        <MudButton Variant="Variant.Outlined">2003</MudButton>
-    </MudStack>
+    <MudCard Class="p-4" Style="max-width:600px; margin: 1.5rem auto;">
 
-</MudCard>
+        <MudText Typo="Typo.h2" Class="mb-3">
+            @questions[currentQuestion].Question
+        </MudText>
+
+        <MudStack Spacing="2">
+
+            @foreach (var answer in questions[currentQuestion].Answers)
+            {
+                <MudButton 
+                    Variant="Variant.Outlined" 
+                    OnClick="@(() => SelectAnswer(answer))"
+                    Disabled="@answered">
+
+                    @answer
+                </MudButton>
+            }
+
+        </MudStack>
+
+        @if (answered)
+        {
+            <MudText Typo="Typo.h6" Class="mt-3" Color="@feedbackColor">
+                @feedbackMessage
+            </MudText>
+
+            <MudButton 
+                Class="mt-3"
+                Variant="Variant.Filled"
+                Color="Color.Primary"
+                OnClick="NextQuestion">
+                Next Question
+            </MudButton>
+        }
+
+    </MudCard>
+
+    <MudText Typo="Typo.subtitle1" Class="mt-4">
+        Score: @score
+    </MudText>
+
+</div>
+
+@code {
+
+    int currentQuestion = 0;
+    int score = 0;
+    bool answered = false;
+
+    string feedbackMessage = "";
+    Color feedbackColor = Color.Default;
+
+    List<QuizQuestion> questions = new()
+    {
+        new QuizQuestion
+        {
+            Question = "What year was PlayStation 1 released?",
+            CorrectAnswer = "1994",
+            Answers = new() { "1994", "1996", "2000", "2003" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which company created Xbox?",
+            CorrectAnswer = "Microsoft",
+            Answers = new() { "Sony", "Nintendo", "Microsoft", "EA" }
+        }
+    };
+
+    void SelectAnswer(string answer)
+    {
+        answered = true;
+
+        if (answer == questions[currentQuestion].CorrectAnswer)
+        {
+            score++;
+            feedbackMessage = "Correct! 🎉";
+            feedbackColor = Color.Success;
+        }
+        else
+        {
+            feedbackMessage = $"Wrong 😢 Correct answer: {questions[currentQuestion].CorrectAnswer}";
+            feedbackColor = Color.Error;
+        }
+    }
+
+    void NextQuestion()
+    {
+        answered = false;
+        feedbackMessage = "";
+
+        if (currentQuestion < questions.Count - 1)
+            currentQuestion++;
+        else
+            currentQuestion = 0; // reset quiz (eller gå till result-sida)
+    }
+
+    class QuizQuestion
+    {
+        public string Question { get; set; } = "";
+        public string CorrectAnswer { get; set; } = "";
+        public List<string> Answers { get; set; } = new();
+    }
+}

@@ -1,0 +1,28 @@
+@page "/categories"
+@using MudBlazor
+
+<MudText Typo="Typo.h5" Class="mb-4" Align="Align.Center">
+    Choose a Category
+</MudText>
+
+<MudGrid Spacing="3" Justify="Justify.Center">
+
+    <MudItem xs="12" sm="6" md="4">
+        <MudCard Class="p-4" Style="text-align:center;">
+            <MudText Typo="Typo.h6">🎮 Gaming</MudText>
+            <MudText Typo="Typo.caption" Class="mb-2">
+                Games, consoles, characters
+            </MudText>
+
+            <MudButton 
+                Size="Size.Small" 
+                Variant="Variant.Filled" 
+                Color="Color.Primary"
+                Href="/quiz/gaming">
+
+                Play
+            </MudButton>
+        </MudCard>
+    </MudItem>
+
+</MudGrid>

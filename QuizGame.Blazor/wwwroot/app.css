@@ -16,3 +16,26 @@ a, .btn-link {
     background-color: #1e1e1e;
     color: #ffffff;
 }
+
+.start-btn:hover {
+    box-shadow: 0 0 12px rgba(25, 118, 210, 0.8);
+    transform: scale(1.05);
+}
+
+.start-quiz-btn {
+    display: inline-block;
+    background-color: #1976d2;
+    color: white;
+    padding: 16px 40px;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.start-quiz-btn:hover {
+    background-color: #1565c0;
+    box-shadow: 0 0 12px rgba(25, 118, 210, 0.7);
+    transform: scale(1.05);
+}

@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using MudBlazor
+@inject NavigationManager Nav
 
 <div style="
     min-height: 92vh; 
@@ -17,9 +18,18 @@
             Test your knowledge and have fun with our exciting quiz challenges! 🎉
         </MudText>
 
-        <MudButton Size="Size.Large" Variant="Variant.Filled" Color="Color.Primary">
+        <MudButton 
+            Size="Size.Large" 
+            Variant="Variant.Filled" 
+            Color="Color.Primary"
+            OnClick="@(() => Nav.NavigateTo("/categories"))"
+            Style="padding: 16px 40px; font-size: 1.1rem; border-radius: 12px;">
+    
             Start Quiz 🎮
         </MudButton>
+        
+
+
     </div>
 
 </div>

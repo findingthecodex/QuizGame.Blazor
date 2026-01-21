@@ -1,0 +1,216 @@
+@page "/quiz/gaming"
+@rendermode InteractiveServer
+@using MudBlazor
+
+
+<div style="
+    min-height: 90vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    padding-top: 1rem;">
+
+    <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-4">
+        🎮 Gaming Quiz
+    </MudText>
+
+    
+    <MudCard Class="p-4" Style="max-width:600px; margin: 1.5rem auto; text-align: center;">
+
+        <MudText Typo="Typo.h2" Class="mb-3">
+            @questions[currentQuestion].Question
+        </MudText>
+
+        <MudGrid Justify="Justify.Center" Spacing="2">
+
+            @foreach (var answer in questions[currentQuestion].Answers)
+            {
+                <MudItem xs="6" class="d-flex justify-center">
+
+                    <MudButton 
+                        Variant="Variant.Filled"
+                        Color="Color.Primary"
+                        OnClick="@(() => SelectAnswer(answer))"
+                        Disabled="@answered"
+                        Style="
+                    width: 220px;
+                    height: 70px;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    border-radius: 16px;
+                ">
+
+                        @answer
+                    </MudButton>
+
+                </MudItem>
+            }
+
+        </MudGrid>
+
+        @if (answered)
+        {
+            <MudText Typo="Typo.h6" Class="mt-3" Color="@feedbackColor">
+                @feedbackMessage
+            </MudText>
+
+            <MudButton 
+                Class="mt-3"
+                Variant="Variant.Filled"
+                Color="Color.Primary"
+                OnClick="NextQuestion">
+                Next Question
+            </MudButton>
+        }
+
+    </MudCard>
+
+    <MudText Typo="Typo.subtitle1" Class="mt-4">
+        Score: @score
+    </MudText>
+
+</div>
+
+@code {
+
+    int currentQuestion = 0;
+    int score = 0;
+    bool answered = false;
+
+    string feedbackMessage = "";
+    Color feedbackColor = Color.Default;
+
+    protected override void OnInitialized()
+    {
+        ShuffleQuestions();
+    }
+
+    /// <summary>
+    ///  Shuffles Questions and answer buttons
+    /// </summary>
+    void ShuffleQuestions()
+    {
+        var rnd = new Random();
+        questions=questions
+            .OrderBy(q => rnd.Next())
+            .Select(q => new QuizQuestion
+                {
+                    Question = q.Question,
+                    CorrectAnswer = q.CorrectAnswer,
+                    Answers = q.Answers.OrderBy(a => rnd.Next())
+                        .ToList()
+                })
+            .ToList();
+    }
+
+    List<QuizQuestion> questions = new()
+    {
+        new QuizQuestion
+        {
+            Question = "What year was PlayStation 1 released?",
+            CorrectAnswer = "1994",
+            Answers = new() { "1994", "1996", "2000", "2003" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which company created Xbox?",
+            CorrectAnswer = "Microsoft",
+            Answers = new() { "Sony", "Nintendo", "Microsoft", "EA" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which game features the character Kratos?",
+            CorrectAnswer = "God of War",
+            Answers = new() { "Dark Souls", "God of War", "Assassin's Creed", "Skyrim" }
+        },
+        new QuizQuestion
+        {
+            Question = "What year was the first Xbox released?",
+            CorrectAnswer = "2001",
+            Answers = new() { "1999", "2000", "2001", "2003" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which company created Fortnite?",
+            CorrectAnswer = "Epic Games",
+            Answers = new() { "Valve", "Epic Games", "Ubisoft", "EA" }
+        },
+        new QuizQuestion
+        {
+            Question = "What is the best-selling video game of all time?",
+            CorrectAnswer = "Minecraft",
+            Answers = new() { "GTA V", "Minecraft", "Tetris", "Fortnite" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which console was released first?",
+            CorrectAnswer = "PlayStation 1",
+            Answers = new() { "Xbox", "PlayStation 1", "Nintendo 64", "GameCube" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which game series features Master Chief?",
+            CorrectAnswer = "Halo",
+            Answers = new() { "Call of Duty", "Halo", "Battlefield", "Destiny" }
+        },
+        new QuizQuestion
+        {
+            Question = "What company owns PlayStation?",
+            CorrectAnswer = "Sony",
+            Answers = new() { "Microsoft", "Nintendo", "Sony", "Samsung" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which game is set in the world of Hyrule?",
+            CorrectAnswer = "The Legend of Zelda",
+            Answers = new() { "Final Fantasy", "The Legend of Zelda", "Elden Ring", "Dark Souls" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which game popularized the Battle Royale genre?",
+            CorrectAnswer = "PUBG",
+            Answers = new() { "Fortnite", "Apex Legends", "PUBG", "Warzone" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which company created the Steam platform?",
+            CorrectAnswer = "Valve",
+            Answers = new() { "EA", "Ubisoft", "Valve", "Epic Games" }
+        }
+    };
+
+    void SelectAnswer(string answer)
+    {
+        answered = true;
+
+        if (answer == questions[currentQuestion].CorrectAnswer)
+        {
+            score++;
+            feedbackMessage = "Correct! 🎉";
+            feedbackColor = Color.Success;
+        }
+        else
+        {
+            feedbackMessage = $"Wrong 😢 Correct answer: {questions[currentQuestion].CorrectAnswer}";
+            feedbackColor = Color.Error;
+        }
+    }
+
+    void NextQuestion()
+    {
+        answered = false;
+        feedbackMessage = "";
+
+        if (currentQuestion < questions.Count - 1)
+            currentQuestion++;
+        else
+            currentQuestion = 0; // reset quiz (eller gå till result-sida)
+    }
+
+    class QuizQuestion
+    {
+        public string Question { get; set; } = "";
+        public string CorrectAnswer { get; set; } = "";
+        public List<string> Answers { get; set; } = new();
+    }
+}

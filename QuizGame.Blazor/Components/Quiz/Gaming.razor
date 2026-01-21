@@ -1,6 +1,7 @@
 @page "/quiz/gaming"
 @rendermode InteractiveServer
 @using MudBlazor
+@using Models
 
 
 <div style="
@@ -10,17 +11,42 @@
     align-items: center;
     padding-top: 1rem;">
 
+    <!-- Topic -->
     <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-4">
         🎮 Gaming Quiz
     </MudText>
-
     
-    <MudCard Class="p-4" Style="max-width:600px; margin: 1.5rem auto; text-align: center;">
+    <!-- Show Result -->
+    <MudText Typo="Typo.h2" Align="Align.Center" Class="mb-4">
+        @(currentQuestion + 1)/10
+    </MudText>
+    
+    @if (showResult)
+    {
+        <MudCard Class="p-6" Style="max-width:500px; text-align:center; background-color: transparent">
+            <MudText Typo="Typo.h2">🎉 Quiz Completed!</MudText>
+            <MudText Typo="Typo.h3">
+                Score: @score / 10
+            </MudText>
+
+            <MudButton Class="mt-4" OnClick="RestartQuiz">
+                Play Again
+            </MudButton>
+        </MudCard>
+    }
+    else
+    {
+        <!-- Här ligger ditt nuvarande quiz -->
+    
+
+    <!-- The Question -->
+    <MudCard Class="p-4" Style="max-width:600px; margin: 1.5rem auto; text-align: center; background-color:transparent">
 
         <MudText Typo="Typo.h2" Class="mb-3">
             @questions[currentQuestion].Question
         </MudText>
 
+        <!-- Answer choices -->
         <MudGrid Justify="Justify.Center" Spacing="2">
 
             @foreach (var answer in questions[currentQuestion].Answers)
@@ -30,6 +56,7 @@
                     <MudButton 
                         Variant="Variant.Filled"
                         Color="Color.Primary"
+                        class="glow-button"
                         OnClick="@(() => SelectAnswer(answer))"
                         Disabled="@answered"
                         Style="
@@ -45,33 +72,49 @@
 
                 </MudItem>
             }
-
         </MudGrid>
 
+        <!-- Correct or Wrong text -->
         @if (answered)
         {
-            <MudText Typo="Typo.h6" Class="mt-3" Color="@feedbackColor">
+            <MudText Typo="Typo.h2" Class="mt-3" Color="@feedbackColor">
                 @feedbackMessage
             </MudText>
 
+            <!-- Next Question button -->
             <MudButton 
                 Class="mt-3"
                 Variant="Variant.Filled"
                 Color="Color.Primary"
-                OnClick="NextQuestion">
+                OnClick="NextQuestion"
+                Style="
+                        width: 180px;
+                        height: 50px;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        border-radius: 20px;
+                        box-shadow: 0 0 15px rgba(0,0,0,0.7);
+                ">
                 Next Question
             </MudButton>
         }
+        
+        
 
     </MudCard>
 
     <MudText Typo="Typo.subtitle1" Class="mt-4">
         Score: @score
     </MudText>
-
+    }
+    
 </div>
+    
 
 @code {
+    
+    int totalQuestions = 10;
+    bool showResult = false;
 
     int currentQuestion = 0;
     int score = 0;
@@ -100,6 +143,7 @@
                     Answers = q.Answers.OrderBy(a => rnd.Next())
                         .ToList()
                 })
+            .Take(totalQuestions)
             .ToList();
     }
 
@@ -176,7 +220,57 @@
             Question = "Which company created the Steam platform?",
             CorrectAnswer = "Valve",
             Answers = new() { "EA", "Ubisoft", "Valve", "Epic Games" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which game engine is used to develop Fortnite?",
+            CorrectAnswer = "Unreal Engine",
+            Answers = new() { "Unity", "Frostbite", "Unreal Engine", "CryEngine" }
+        },
+        new QuizQuestion
+        {
+            Question = "What is the name of the continent in The Witcher 3?",
+            CorrectAnswer = "The Continent",
+            Answers = new() { "Nilfgaard", "Skellige", "The Continent", "Temeria" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which Soulsborne game was developed by FromSoftware but published by Activision?",
+            CorrectAnswer = "Sekiro: Shadows Die Twice",
+            Answers = new() { "Dark Souls III", "Bloodborne", "Sekiro", "Elden Ring" }
+        },
+        new QuizQuestion
+        {
+            Question = "What is the maximum level in World of Warcraft: Dragonflight?",
+            CorrectAnswer = "70",
+            Answers = new() { "60", "70", "80", "75" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which company originally created the Diablo franchise?",
+            CorrectAnswer = "Blizzard North",
+            Answers = new() { "Blizzard North", "Bethesda", "Valve", "BioWare" }
+        },
+        new QuizQuestion
+        {
+            Question = "What is the name of Kratos’ son in God of War (2018)?",
+            CorrectAnswer = "Atreus",
+            Answers = new() { "Loki", "Atreus", "Baldur", "Tyr" }
+        },
+        new QuizQuestion
+        {
+            Question = "Which game introduced the Battle Pass system to mainstream gaming?",
+            CorrectAnswer = "Fortnite",
+            Answers = new() { "PUBG", "Fortnite", "Apex Legends", "Warzone" }
+        },
+        new QuizQuestion
+        {
+            Question = "What is the name of the AI antagonist in Portal?",
+            CorrectAnswer = "GLaDOS",
+            Answers = new() { "HAL 9000", "Atlas", "GLaDOS", "Cortana" }
         }
+        
+        
     };
 
     void SelectAnswer(string answer)
@@ -204,13 +298,14 @@
         if (currentQuestion < questions.Count - 1)
             currentQuestion++;
         else
-            currentQuestion = 0; // reset quiz (eller gå till result-sida)
+            showResult = true;
     }
-
-    class QuizQuestion
+    
+    void RestartQuiz()
     {
-        public string Question { get; set; } = "";
-        public string CorrectAnswer { get; set; } = "";
-        public List<string> Answers { get; set; } = new();
+        currentQuestion = 0;
+        score = 0;
+        showResult = false;
+        ShuffleQuestions();
     }
 }

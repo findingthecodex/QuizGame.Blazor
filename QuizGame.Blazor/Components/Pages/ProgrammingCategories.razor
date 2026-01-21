@@ -1,4 +1,4 @@
-@page "/categories"
+@page "/programmingcategories"
 @rendermode InteractiveServer
 @using MudBlazor
 @using Quiz
@@ -12,9 +12,40 @@
     padding-top: 15rem;">
 
     <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-6">
-        🎯 Choose a Category
+        💻 Programming
     </MudText>
 
+    <MudButton
+        Variant="Variant.Filled" 
+        Color="Color.Primary"
+        Class="glow-button"
+        OnClick="OOPGrund"
+        Style="
+        width: 300px;
+        height: 110px;
+        font-size: 2rem;
+        font-weight: 600;
+        border-radius: 20px;
+    ">
+    
+        OOP Basic
+    </MudButton>
+    
+    <MudButton
+        Variant="Variant.Filled" 
+        Color="Color.Primary"
+        Class="glow-button"
+        Style="
+        width: 300px;
+        height: 110px;
+        font-size: 2rem;
+        font-weight: 600;
+        border-radius: 20px;
+    ">
+    
+        Databases
+    </MudButton>
+    
     <MudButton
         Variant="Variant.Filled" 
         Color="Color.Primary"
@@ -28,38 +59,7 @@
         border-radius: 20px;
     ">
     
-        Gaming 🎮
-    </MudButton>
-    
-    <MudButton
-        Variant="Variant.Filled" 
-        Color="Color.Primary"
-        Class="glow-button"
-        Style="
-        width: 300px;
-        height: 110px;
-        font-size: 2rem;
-        font-weight: 600;
-        border-radius: 20px;
-    ">
-    
-        Sport 🥊
-    </MudButton>
-    
-    <MudButton
-        Variant="Variant.Filled" 
-        Color="Color.Primary"
-        Class="glow-button"
-        OnClick="ProgrammingCategories"
-        Style="
-        width: 300px;
-        height: 110px;
-        font-size: 2rem;
-        font-weight: 600;
-        border-radius: 20px;
-    ">
-    
-        Programming 💻
+        OOP Advanced
     </MudButton>
 
 </div>
@@ -84,8 +84,8 @@
         Nav.NavigateTo("/quiz/gaming");
     }
 
-    private void ProgrammingCategories()
+    private void OOPGrund()
     {
-        Nav.NavigateTo("/programmingcategories");
+        Nav.NavigateTo("/quiz/oopgrund");
     }
 }

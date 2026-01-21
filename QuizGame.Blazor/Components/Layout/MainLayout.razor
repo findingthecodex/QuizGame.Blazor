@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager Nav
 @using MudBlazor
+@using NavigationContext = MudBlazor.NavigationContext
 
 <MudThemeProvider IsDarkMode="true" />
 <MudDialogProvider />
@@ -8,9 +10,11 @@
 <MudLayout>
 
     <MudAppBar Color="Color.Dark" Dense="true" Elevation="0">
-        <MudText Typo="Typo.subtitle1" Color="Color.Inherit">
-            QuizGame ⚔️
-        </MudText>
+        <a href="/" style="text-decoration:none; color: inherit;">
+            <MudText Typo="Typo.subtitle1">
+                QuizGame ⚔️
+            </MudText>
+        </a>
     </MudAppBar>
 
     <MudMainContent Class="p-6">

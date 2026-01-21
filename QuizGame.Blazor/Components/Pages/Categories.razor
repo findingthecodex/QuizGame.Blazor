@@ -45,6 +45,22 @@
     
         Sport 🥊
     </MudButton>
+
+    <MudButton
+        Variant="Variant.Filled"
+        Color="Color.Primary"
+        Class="glow-button"
+        OnClick="Animals"
+        Style="
+        width: 300px;
+        height: 110px;
+        font-size: 2rem;
+        font-weight: 600;
+        border-radius: 20px;
+    ">
+
+        Svenska Djur 🐶
+    </MudButton>
     
     <MudButton
         Variant="Variant.Filled" 
@@ -87,5 +103,10 @@
     private void ProgrammingCategories()
     {
         Nav.NavigateTo("/programmingcategories");
+    }
+
+    private void Animals()
+    {
+        Nav.NavigateTo("/quiz/animals");
     }
 }

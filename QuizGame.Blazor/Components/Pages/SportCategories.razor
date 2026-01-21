@@ -1,4 +1,4 @@
-@page "/categories"
+@page "/sportcategories"
 @rendermode InteractiveServer
 @using MudBlazor
 @using Quiz
@@ -12,9 +12,41 @@
     padding-top: 15rem;">
 
     <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-6">
-        🎯 Choose a Category
+        Sport Categories 🥊
     </MudText>
 
+    <MudButton
+        Variant="Variant.Filled" 
+        Color="Color.Primary"
+        Class="glow-button"
+        OnClick="OOPGrund"
+        Style="
+        width: 300px;
+        height: 110px;
+        font-size: 2rem;
+        font-weight: 600;
+        border-radius: 20px;
+    ">
+    
+        Olympics
+    </MudButton>
+    
+    <MudButton
+        Variant="Variant.Filled" 
+        Color="Color.Primary"
+        Class="glow-button"
+        OnClick="MuayThai"
+        Style="
+        width: 300px;
+        height: 110px;
+        font-size: 2rem;
+        font-weight: 600;
+        border-radius: 20px;
+    ">
+    
+        Muay Thai
+    </MudButton>
+    
     <MudButton
         Variant="Variant.Filled" 
         Color="Color.Primary"
@@ -28,55 +60,7 @@
         border-radius: 20px;
     ">
     
-        Gaming 🎮
-    </MudButton>
-    
-    <MudButton
-        Variant="Variant.Filled" 
-        Color="Color.Primary"
-        Class="glow-button"
-        OnClick="SportCategories"
-        Style="
-        width: 300px;
-        height: 110px;
-        font-size: 2rem;
-        font-weight: 600;
-        border-radius: 20px;
-    ">
-    
-        Sport 🥊
-    </MudButton>
-
-    <MudButton
-        Variant="Variant.Filled"
-        Color="Color.Primary"
-        Class="glow-button"
-        OnClick="Animals"
-        Style="
-        width: 300px;
-        height: 110px;
-        font-size: 2rem;
-        font-weight: 600;
-        border-radius: 20px;
-    ">
-
-        Svenska Djur 🐶
-    </MudButton>
-    
-    <MudButton
-        Variant="Variant.Filled" 
-        Color="Color.Primary"
-        Class="glow-button"
-        OnClick="ProgrammingCategories"
-        Style="
-        width: 300px;
-        height: 110px;
-        font-size: 2rem;
-        font-weight: 600;
-        border-radius: 20px;
-    ">
-    
-        Programming 💻
+        Boxing
     </MudButton>
 
 </div>
@@ -101,18 +85,13 @@
         Nav.NavigateTo("/quiz/gaming");
     }
 
-    private void ProgrammingCategories()
+    private void OOPGrund()
     {
-        Nav.NavigateTo("/programmingcategories");
+        Nav.NavigateTo("/quiz/oopgrund");
     }
 
-    private void Animals()
+    private void MuayThai()
     {
-        Nav.NavigateTo("/quiz/animals");
-    }
-
-    private void SportCategories()
-    {
-        Nav.NavigateTo("/sportcategories");
+        Nav.NavigateTo("/quiz/muaythai");
     }
 }
